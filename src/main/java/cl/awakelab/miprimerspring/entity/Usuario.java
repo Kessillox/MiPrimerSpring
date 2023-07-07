@@ -8,12 +8,13 @@ import lombok.Data;
 @Table(name = "Usuarios")
 public class Usuario {
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
-
+    @Column
     private int rut;
-
+    @Column
     private String contrasenia;
-
+    @Column
     private String rol;
 }

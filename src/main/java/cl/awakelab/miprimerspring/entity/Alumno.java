@@ -10,15 +10,20 @@ import java.time.LocalDate;
 @Table(name = "Alumnos")
 public class Alumno {
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAlumno;
+    @Column
     private String nombre;
+    @Column
     private String apellido1;
+    @Column
     private String apellido2;
+    @Column
     private String direccion;
+    @Column
     private LocalDate fechaNacimiento;
-
-    @ManyToOne
-    @JoinColumn(name = "idCurso")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_Curso", nullable = false)
     private Curso curso;
 }
