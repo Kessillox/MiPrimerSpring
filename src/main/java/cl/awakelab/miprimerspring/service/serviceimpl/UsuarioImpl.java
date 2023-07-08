@@ -43,7 +43,7 @@ public class UsuarioImpl implements IUsuarioService {
         return objUsuarioRepo.save(usuario);
     }
     @Override
-    public void eliminarUsuario(int idUsuario) {
-        objUsuarioRepo.deleteById(idUsuario);
+    public void eliminarUsuario(Usuario usuario) {
+        objUsuarioRepo.delete(usuario);
     }
 }
