@@ -33,7 +33,12 @@ public class UsuarioController {
         return objUsuarioService.actualizarUsuario2(usuarioActualizar);
     }
     @DeleteMapping //Eliminar
-    public void eliminarUsuario(Usuario usuario){
+    public void eliminarUsuario(@RequestBody Usuario usuario){
         objUsuarioService.eliminarUsuario(usuario);
+    }
+
+    @DeleteMapping("/{idUsuario}")
+    public void eliminarUsuario2(@PathVariable int idUsuario){
+        objUsuarioService.eliminarUsuario2(idUsuario);
     }
 }
