@@ -3,42 +3,66 @@ package cl.awakelab.miprimerspring.controller;
 import cl.awakelab.miprimerspring.entity.Usuario;
 import cl.awakelab.miprimerspring.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RestController
+
+@Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
 
     @Autowired
     IUsuarioService objUsuarioService;
-    @PostMapping// tipo de request //enviar informacion
-    public Usuario crearUsuario(@RequestBody Usuario usuario){
-        return objUsuarioService.crearUsuario(usuario);
-    }
-    @GetMapping("/{idUsuario}") //traer informacion
-    public Usuario buscarUsuarioPorId(@PathVariable int idUsuario){
-        return objUsuarioService.buscarUsuarioPorId(idUsuario);
-    }
+
     @GetMapping
-    public List<Usuario> listarUsuarios(){
-        return objUsuarioService.listarUsuarios();
-    }
-    @PutMapping("/{idUsuario}")
-    public Usuario actualizarUsuario(@RequestBody Usuario usuarioActualizar, @PathVariable int idUsuario){
-        return objUsuarioService.actualizarUsuario(usuarioActualizar,idUsuario);
-    }
-    @PutMapping //Actualizar
-    public Usuario actualizarUsuario2(@RequestBody Usuario usuarioActualizar){
-        return objUsuarioService.actualizarUsuario2(usuarioActualizar);
-    }
-    @DeleteMapping //Eliminar
-    public void eliminarUsuario(@RequestBody Usuario usuario){
-        objUsuarioService.eliminarUsuario(usuario);
+    public String listarUsuarios(Model model){
+        List<Usuario> listaUsuarios = objUsuarioService.listarUsuarios();
+        model.addAttribute("usuarios", listaUsuarios);
+        return "usuarios";
     }
 
-    @DeleteMapping("/{idUsuario}")
-    public void eliminarUsuario2(@PathVariable int idUsuario){
+    @GetMapping("/{idUsuario}")
+    public String listarUsuarioPorId(@PathVariable int idUsuario, Model model){
+        Usuario usuario = objUsuarioService.buscarUsuarioPorId(idUsuario);
+        model.addAttribute("usuario", usuario);
+        return "usuario";
+    }
+
+    @GetMapping("/crearUsuario")
+    public String mostrarFormularioCrearUsuario(Model model){
+        return "crearUsuario";
+    }
+
+    @PostMapping("/crearUsario")
+    public String crearUsuario(@ModelAttribute Usuario usuario){
+        objUsuarioService.crearUsuario(usuario);
+        return "redirect:/usuarios";
+    }
+
+    @GetMapping("/{idUsuario}/editar")
+    public String mostrarFormularioEditarUsuario(@PathVariable int idUsuario, Model model){
+        Usuario usuarioParaEditar = objUsuarioService.buscarUsuarioPorId(idUsuario);
+        model.addAttribute("usuario", usuarioParaEditar);
+        return "editarUsuario";
+    }
+
+    @PostMapping("/{idUsuario}/editar")
+    public String actualizarUsuario(@PathVariable int idUsuario, @ModelAttribute Usuario usuario){
+        objUsuarioService.actualizarUsuario2(usuario);
+        return "redirect:/usuarios";
+    }
+
+    @GetMapping("/{idUsuario}/eliminar")
+    public String mostrarEliminarUsuario(@PathVariable int idUsuario, Model model){
+        Usuario usuarioEliminar = objUsuarioService.buscarUsuarioPorId(idUsuario);
+        model.addAttribute("usuario", usuarioEliminar);
+        return "elimimarUsuario";
+    }
+
+    public String eliminarUsuario(@PathVariable int idUsuario){
         objUsuarioService.eliminarUsuario2(idUsuario);
+        return "redirect: /usuarios";
     }
 }
