@@ -38,7 +38,7 @@ public class UsuarioController {
     @PostMapping("/crearUsario")
     public String crearUsuario(@ModelAttribute Usuario usuario){
         objUsuarioService.crearUsuario(usuario);
-        return "redirect:/usuarios";
+        return "redirect:/usuario";
     }
 
     @GetMapping("/{idUsuario}/editar")
@@ -51,7 +51,7 @@ public class UsuarioController {
     @PostMapping("/{idUsuario}/editar")
     public String actualizarUsuario(@PathVariable int idUsuario, @ModelAttribute Usuario usuario){
         objUsuarioService.actualizarUsuario2(usuario);
-        return "redirect:/usuarios";
+        return "redirect:/usuario";
     }
 
     @GetMapping("/{idUsuario}/eliminar")
@@ -63,6 +63,6 @@ public class UsuarioController {
 
     public String eliminarUsuario(@PathVariable int idUsuario){
         objUsuarioService.eliminarUsuario2(idUsuario);
-        return "redirect: /usuarios";
+        return "redirect: /usuario";
     }
 }
