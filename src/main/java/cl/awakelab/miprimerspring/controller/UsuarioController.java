@@ -20,7 +20,7 @@ public class UsuarioController {
     public String listarUsuarios(Model model){
         List<Usuario> listaUsuarios = objUsuarioService.listarUsuarios();
         model.addAttribute("usuarios", listaUsuarios);
-        return "usuarios";
+        return "listarUsuarios";
     }
 
     @GetMapping("/{idUsuario}")
